@@ -35,12 +35,12 @@ function Musician(instrument) {
       });
   };
 
-  setInterval(this.update.bind(this), 5000);
+  setInterval(this.update.bind(this), 1000);
 }
 
 const instrument = process.argv[2];
 
-if (instrument !== '') {
+if (instrument !== null) {
   // eslint-disable-next-line no-unused-vars
   const m1 = new Musician(instrument);
 }
