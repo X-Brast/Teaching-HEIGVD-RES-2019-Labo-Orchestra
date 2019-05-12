@@ -105,7 +105,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | --- | --- |
 |Question | How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? |
-| | *Insert your diagram here...* |
+| | *![image](images/diagram.png)* |
 |Question | Who is going to **send UDP datagrams** and **when**? |
 | | *le musicien et il envoie chaque seconde* |
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
@@ -153,7 +153,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | How do we **stop/kill** one running container?  |
 | | *`docker kill <Container ID>`*  |
 |Question | How can we check that our running containers are effectively sending UDP datagrams?  |
-| | *Enter your response here...*  |
+| | *Je sais pas*  |
 
 
 ## Task 4: implement an "auditor" Node.js application
@@ -169,7 +169,22 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | When and how do we **get rid of inactive players**?  |
 | | *Je le supprime uniquement lors d'une connection TCP avec `allMusician.delete(key);`* |
 |Question | How do I implement a **simple TCP server** in Node.js?  |
-| | *Enter your response here...* |
+| | *`const TCPserver = net.createServer();
+TCPserver.listen(protocole.PROTOCOL_PORT);
+TCPserver.on('connection', (TCPSocket) => {
+  const payload = [];
+  allMusician.forEach((value, key) => {
+    if (moment().diff(value[1], 'second') >= 5) {
+      allMusician.delete(key);
+    } else {
+      payload.push({ uuid: key, instrument: value[0], acticeSince: value[1] });
+    }
+  });
+
+  TCPSocket.write(JSON.stringify(payload));
+  TCPSocket.write('\r\n');
+  TCPSocket.end();
+});`* |
 
 
 ## Task 5: package the "auditor" app in a Docker image
